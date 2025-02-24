@@ -11,7 +11,7 @@
       "description": "Script resources",
       "language": "javascript",
       "type": "script",
-      "uuid": "cfeb1bbe-5b2e-49af-a338-865e1f4e8ae3",
+      "uuid": "1612497c-3012-44ea-8256-31e6091491e7",
       "version": [1, 0, 0],
       "entry": "scripts/main.js"
     }
