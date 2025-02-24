@@ -1,8 +1,6 @@
 import { world, Player } from "@minecraft/server";
 
 world.afterEvents.projectileHitBlock.subscribe((event) => {
-  console.log("aaa");
-
   world.sendMessage("Projectile hit block event");
   if (!(event.source instanceof Player)) return;
   const dim = event.dimension;
