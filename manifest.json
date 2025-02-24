@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "ChanchaManager",
+    "description": "Create the better server for you and your friends",
+    "uuid": "cfeb1bbe-5b2e-49af-a338-865e1f4e8ae3",
+    "version": [1, 0, 0],
+  },
+  "modules": [
+    {
+      "description": "Script resources",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "cfeb1bbe-5b2e-49af-a338-865e1f4e8ae3",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.9.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.1.0"
+    }
+  ]
+}
