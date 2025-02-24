@@ -1,6 +1,7 @@
-import { world, Player, Entity } from "@minecraft/server";
+import { world, Player } from "@minecraft/server";
 
 world.afterEvents.projectileHitBlock.subscribe((event) => {
+  world.sendMessage("Projectile hit block event");
   if (!(event.source instanceof Player)) return;
   const dim = event.dimension;
   const projectile = event.projectile;
@@ -8,6 +9,6 @@ world.afterEvents.projectileHitBlock.subscribe((event) => {
   const vec = event.location;
 
   if (projectile.typeId === "minecraft:arrow") {
-    attacker.sendMessage(`You shot an arrow named ${projectile.nameTag} at ${vec}`);
+    world.sendMessage(`Arrow named ${projectile.nameTag} hit block event`);
   }
 });

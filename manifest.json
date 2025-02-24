@@ -4,12 +4,12 @@
     "name": "ChanchaManager",
     "description": "Create the better server for you and your friends",
     "uuid": "cfeb1bbe-5b2e-49af-a338-865e1f4e8ae3",
-    "version": [1, 0, 0]
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
   },
   "modules": [
     {
       "description": "Script resources",
-      "language": "javascript",
       "type": "script",
       "uuid": "1612497c-3012-44ea-8256-31e6091491e7",
       "version": [1, 0, 0],
