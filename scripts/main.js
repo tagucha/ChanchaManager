@@ -47,7 +47,7 @@ world.afterEvents.itemUse.subscribe((event) => {
 
   if (warning_items.includes(item.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
-      player.dimension.runCommand(`/title ${player.name} actionbar §c"${target.name}"を"${translatable[item.typeId]}"使いました！(${Math.trunc(target.location.x)},${Math.trunc(target.location.y)},${Math.trunc(target.location.z)})`);
+      player.dimension.runCommand(`/title ${player.name} actionbar §c"${target.name}"が"${translatable[item.typeId]}"を使いました！(${Math.trunc(target.location.x)},${Math.trunc(target.location.y)},${Math.trunc(target.location.z)})`);
     });
   }
 });
