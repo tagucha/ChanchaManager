@@ -1,4 +1,4 @@
-import {InputPermissionCategory, world} from "@minecraft/server";
+import {EntityComponentTypes, InputPermissionCategory, world} from "@minecraft/server";
 import {ActionFormData} from "@minecraft/server-ui";
 import * as permission from "./permission";
 
@@ -15,13 +15,16 @@ export function showAdminMenu(admin) {
   }
   form.show(admin).then((data) => {
     const player = player_list[data.selection];
-    showPlayerMenu(player, admin);
+    if (player) showPlayerMenu(player, admin);
   });
 }
 
 function showPlayerMenu(player, admin) {
   const form = new ActionFormData();
   form.title(player.name);
+  form.body("Dimension: " + player.dimension.id);
+  form.body("Location: (" + Math.trunc(player.location.x) + ", " + Math.trunc(player.location.y) + ", " + Math.trunc(player.location.z) + ")");
+  form.body("HP: " + player.getComponent(EntityComponentTypes.Health).currentValue);
   if (permission.isTrusted(player)) {
     form.body("信頼中");
   }
@@ -32,6 +35,7 @@ function showPlayerMenu(player, admin) {
   form.button("信頼を解除");
   form.button("移動を制限する");
   form.button("移動制限を解除");
+  form.button("インベントリを見る");
   form.button("戻る");
   form.show(admin).then((data) => {
     switch (data.selection) {
@@ -61,8 +65,34 @@ function showPlayerMenu(player, admin) {
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Dismount, true);
         break;
       case 4:
+        showPlayersInventory(player, admin);
+        break;
+      case 5:
         showAdminMenu(admin);
         break;
+    }
+  });
+}
+
+function showPlayersInventory(player, admin) {
+  const form = new ActionFormData();
+  form.title(player.name + "のインベントリ");
+  const inventory = player.getComponent(EntityComponentTypes.Inventory);
+  const slots = [];
+  for (let i = 0; i < inventory.container.size; i++) {
+    const slot = inventory.container.getSlot(i);
+    if (slot.hasItem()) {
+      form.button(`${slot.amount}x${slot.typeId}を消去`);
+      slots.push(i);
+    }
+  }
+  form.button("戻る");
+  form.show(admin).then((data) => {
+    if (data.selection < slots.length) {
+      slots[data.selection].setItem();
+      showPlayersInventory(player, admin);
+    } else {
+      showPlayerMenu(player, admin);
     }
   });
 }
