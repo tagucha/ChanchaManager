@@ -18,7 +18,7 @@
   "modules": [
     {
       "description": "Script resources",
-      "language": "javascript",
+      "language": "typescript",
       "type": "script",
       "uuid": "5506101b-5828-4d4e-bdda-e588405c21a9",
       "version": [
@@ -37,6 +37,10 @@
     {
       "module_name": "@minecraft/server-ui",
       "version": "2.0.0-alpha"
+    },
+    {
+      "module_name": "@minecraft/server-admin",
+      "version": "1.0.0-beta"
     }
   ]
 }
