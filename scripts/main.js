@@ -1,4 +1,4 @@
-import {Player, system, world} from "@minecraft/server";
+import {system, world} from "@minecraft/server";
 import * as permission from "./permission";
 import * as command from "./command";
 
@@ -21,7 +21,7 @@ const warning_broken_blocks = [
 const player_last_chat_time = {};
 
 // 火を付けられたのを検知
-world.afterEvents.itemUseOn.subscribe((event) => {
+world.afterEvents.itemUse.subscribe((event) => {
   const item = event.itemStack;
   const player = event.source
 
@@ -29,7 +29,7 @@ world.afterEvents.itemUseOn.subscribe((event) => {
 
   if (warning_items.includes(item.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
-      player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が着火しました！(${event.block.x},${event.block.y},${event.block.z})`);
+      player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が着火しました！(${player.location})`);
     });
   }
 });

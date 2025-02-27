@@ -10,7 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@minecraft/server": "^2.0.0-beta.1.21.70-preview.24",
+    "@minecraft/server": "^2.0.0-beta.1.21.70-preview.25",
+    "@minecraft/server-admin": "^1.0.0-beta.1.21.70-preview.25",
     "@minecraft/server-ui": "^2.0.0-beta.1.21.70-preview.25"
   }
 }
