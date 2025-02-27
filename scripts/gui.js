@@ -22,15 +22,17 @@ export function showAdminMenu(admin) {
 function showPlayerMenu(player, admin) {
   const form = new ActionFormData();
   form.title(player.name);
-  form.body("Dimension: " + player.dimension.id);
-  form.body("Location: (" + Math.trunc(player.location.x) + ", " + Math.trunc(player.location.y) + ", " + Math.trunc(player.location.z) + ")");
-  form.body("HP: " + player.getComponent(EntityComponentTypes.Health).currentValue);
+  let bodyText = "";
+  bodyText += "Dimension: " + player.dimension.id + "\n";
+  bodyText += "Location: (" + Math.trunc(player.location.x) + ", " + Math.trunc(player.location.y) + ", " + Math.trunc(player.location.z) + ")\n";
+  bodyText += "HP: " + player.getComponent(EntityComponentTypes.Health).currentValue + "\n";
   if (permission.isTrusted(player)) {
-    form.body("信頼中");
+    bodyText += "信頼中\n";
   }
   if (!player.inputPermissions.isPermissionCategoryEnabled(InputPermissionCategory.Movement)) {
-    form.body("移動制限中");
+    bodyText += "移動制限中\n";
   }
+  form.body(bodyText);
   form.button("信頼する");
   form.button("信頼を解除");
   form.button("移動を制限する");
