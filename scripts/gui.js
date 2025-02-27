@@ -1,4 +1,4 @@
-import {EntityComponentTypes, InputPermissionCategory, ItemStack, world} from "@minecraft/server";
+import {EntityComponentTypes, InputPermissionCategory, world} from "@minecraft/server";
 import {ActionFormData} from "@minecraft/server-ui";
 import * as permission from "./permission";
 
@@ -83,13 +83,13 @@ function showPlayersInventory(player, admin) {
     const slot = inventory.container.getSlot(i);
     if (slot.hasItem()) {
       form.button(`${slot.amount}x${slot.typeId}を消去`);
-      slots.push(i);
+      slots.push(slot);
     }
   }
   form.button("戻る");
   form.show(admin).then((data) => {
     if (data.selection < slots.length) {
-      slots[data.selection].amount = 0;
+      slots[data.selection].setItem();
       showPlayersInventory(player, admin);
     } else {
       showPlayerMenu(player, admin);
