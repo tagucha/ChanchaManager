@@ -82,7 +82,7 @@ function showPlayersInventory(player, admin) {
   for (let i = 0; i < inventory.container.size; i++) {
     const slot = inventory.container.getSlot(i);
     if (slot.hasItem()) {
-      form.button(`${slot.amount}x${slot.typeId}を消去`);
+      form.button(`${slot.getItem().amount}x${slot.getItem().typeId}を消去`);
       slots.push(slot);
     }
   }
