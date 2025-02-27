@@ -1,4 +1,4 @@
-import {InputPermissionCategory, Player, world} from "@minecraft/server";
+import {InputPermissionCategory, world} from "@minecraft/server";
 import {ActionFormData} from "@minecraft/server-ui";
 import * as permission from "./permission";
 
@@ -7,13 +7,13 @@ export function showAdminMenu(admin) {
   form.title("プレイヤー管理");
   const player_list = [];
   world.getAllPlayers().filter((player) => !player.isOp()).forEach((player) => {
+    admin.sendMessage(player.name);
     form.button(player.name);
     player_list.push(player);
   });
   if (player_list.length === 0) {
     form.body("プレイヤーがいません");
   }
-  // @ts-ignore
   form.show(admin).then((data) => {
     const player = player_list[data.selection];
     showPlayerMenu(player, admin);
@@ -34,7 +34,6 @@ function showPlayerMenu(player, admin) {
   form.button("移動を制限する");
   form.button("移動制限を解除");
   form.button("戻る");
-  // @ts-ignore
   form.show(admin).then((data) => {
     switch (data.selection) {
       case 0:

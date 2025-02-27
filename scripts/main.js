@@ -1,6 +1,7 @@
 import {system, world} from "@minecraft/server";
 import * as permission from "./permission";
 import * as command from "./command";
+import {showAdminMenu} from "./gui";
 
 //def
 const chat_cooldown = 5;
@@ -26,6 +27,13 @@ world.afterEvents.itemUse.subscribe((event) => {
   const item = event.itemStack;
   const target = event.source
 
+  if (target.isOp()) {
+    if (item.typeId === "minecraft:stick") {
+      showAdminMenu(target);
+      return;
+    }
+  }
+
   if (permission.isTrusted(target)) return;
 
   if (warning_items.includes(item.typeId)) {
@@ -39,7 +47,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
   const target = event.player;
   const block = event.block;
 
-  if (permission.isTrusted(player)) return;
+  if (permission.isTrusted(target)) return;
 
   if (warning_placed_blocks.includes(block.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
@@ -64,32 +72,26 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
 world.beforeEvents.chatSend.subscribe((event) => {
   const player = event.sender;
 
-  if (command.isCommand(event.message)) {
-    event.cancel = true;
-    const {command: cmd, args} = command.parse(event.message);
-    command.execute(player, cmd, args);
-  } else {
-    if (player.isOp()) return;
+  if (player.isOp()) return;
 
-    if (event.message.length > chat_max_length) {
+  if (event.message.length > chat_max_length) {
+    event.cancel = true;
+    system.run(() => {
+      player.sendMessage(`§cメッセージが長すぎます！`);
+      player.sendMessage(`§c長いメッセージはYouTubeのチャットで送信してください`);
+    });
+  }
+
+  if (player_last_chat_time[player.id]) {
+    const last = player_last_chat_time[player.id];
+    const now = system.currentTick;
+    if (now - last < chat_cooldown * 20) {
       event.cancel = true;
       system.run(() => {
-        player.sendMessage(`§cメッセージが長すぎます！`);
-        player.sendMessage(`§c長いメッセージはYouTubeのチャットで送信してください`);
+        player.sendMessage(`§c連続でメッセージを送信することはできません`);
       });
     }
-
-    if (player_last_chat_time[player.id]) {
-      const last = player_last_chat_time[player.id];
-      const now = system.currentTick;
-      if (now - last < chat_cooldown * 20) {
-        event.cancel = true;
-        system.run(() => {
-          player.sendMessage(`§c連続でメッセージを送信することはできません`);
-        });
-      }
-    }
-
-    player_last_chat_time[player.id] = system.currentTick;
   }
+
+  player_last_chat_time[player.id] = system.currentTick;
 })
