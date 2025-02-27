@@ -1,6 +1,5 @@
 import {system, world} from "@minecraft/server";
 import * as permission from "./permission";
-import * as command from "./command";
 import {showAdminMenu} from "./gui";
 
 //def
