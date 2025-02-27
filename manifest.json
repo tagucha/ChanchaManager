@@ -1,8 +1,8 @@
 {
   "format_version": 2,
   "header": {
-    "name": "myaddonStarter",
-    "description": "Add-On Starter",
+    "name": "ChanchaManager",
+    "description": "Make your server management easier",
     "uuid": "052117da-1e74-456f-ba73-bfeff78a1e3b",
     "version": [
       1,
@@ -17,16 +17,6 @@
   },
   "modules": [
     {
-      "description": "Behavior",
-      "version": [
-        1,
-        0,
-        0
-      ],
-      "uuid": "17734de0-5280-45fe-9922-4e50c7ea5c34",
-      "type": "data"
-    },
-    {
       "description": "Script resources",
       "language": "javascript",
       "type": "script",
@@ -36,41 +26,21 @@
         0,
         1
       ],
-      "entry": "scripts/main.js"
+      "entry": "scripts/main.ts"
     }
   ],
   "dependencies": [
     {
-      "uuid": "31a1ceb8-dff7-4ff1-b9ae-fe652e244e0a",
-      "version": [
-        1,
-        0,
-        0
-      ]
-    },
-    {
       "module_name": "@minecraft/server",
-      "version": [
-        2,
-        0,
-        0
-      ]
+      "version": "2.0.0-alpha"
     },
     {
       "module_name": "@minecraft/server-ui",
-      "version": [
-        1,
-        3,
-        0
-      ]
+      "version": "1.3.0"
     },
     {
       "module_name": "@minecraft/server-admin",
-      "version": [
-        1,
-        0,
-        0
-      ]
+      "version": "1.0.0"
     }
   ]
 }

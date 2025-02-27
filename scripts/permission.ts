@@ -1,4 +1,4 @@
-import {Player, world} from "@minecraft/server";
+import {Player} from "@minecraft/server";
 
 export function isTrusted(player: Player) {
   return player.hasTag("trusted") || player.isOp();
