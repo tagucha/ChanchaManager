@@ -7,7 +7,6 @@ export function showAdminMenu(admin) {
   form.title("プレイヤー管理");
   const player_list = [];
   world.getAllPlayers().filter((player) => !player.isOp()).forEach((player) => {
-    admin.sendMessage(player.name);
     form.button(player.name);
     player_list.push(player);
   });
@@ -38,9 +37,11 @@ function showPlayerMenu(player, admin) {
     switch (data.selection) {
       case 0:
         permission.trust(player);
+        showPlayerMenu(player, admin);
         break;
       case 1:
         permission.untrust(player);
+        showPlayerMenu(player, admin);
         break;
       case 2:
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, false);
@@ -49,6 +50,7 @@ function showPlayerMenu(player, admin) {
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Camera, false);
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Mount, false);
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Dismount, false);
+        showPlayerMenu(player, admin);
         break;
       case 3:
         player.inputPermissions.setPermissionCategory(InputPermissionCategory.Movement, true);
@@ -60,8 +62,7 @@ function showPlayerMenu(player, admin) {
         break;
       case 4:
         showAdminMenu(admin);
-        return;
+        break;
     }
-    showPlayerMenu(player, admin);
   });
 }
