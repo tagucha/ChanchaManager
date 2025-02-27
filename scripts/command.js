@@ -3,17 +3,17 @@ import {showAdminMenu} from "./gui";
 
 const prefix = '!';
 
-export const isCommand = (message: string) => {
+export const isCommand = (message) => {
   return message.startsWith(prefix);
 }
 
-export const parse = (message: string): {command: string, args: string[]}|null => {
+export const parse = (message) => {
   if (!isCommand(message)) return null;
   const [command, ...args] = message.slice(prefix.length).split(' ');
   return {command, args};
 }
 
-export function execute(player: Player, command: string, args: string[]) {
+export function execute(player, command, args) {
   if (!player.isOp()) {
     player.sendMessage('権限がありません');
     return;

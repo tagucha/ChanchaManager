@@ -18,7 +18,7 @@ const warning_broken_blocks = [
 ]
 
 
-const player_last_chat_time: {[key: string]: number} = {};
+const player_last_chat_time = {};
 
 // 火を付けられたのを検知
 world.afterEvents.itemUseOn.subscribe((event) => {
@@ -28,7 +28,7 @@ world.afterEvents.itemUseOn.subscribe((event) => {
   if (permission.isTrusted(player)) return;
 
   if (warning_items.includes(item.typeId)) {
-    world.getAllPlayers().filter((player: Player)=> player.isOp()).forEach((player: Player) => {
+    world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
       player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が着火しました！(${event.block.x},${event.block.y},${event.block.z})`);
     });
   }
@@ -41,7 +41,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
   if (permission.isTrusted(player)) return;
 
   if (warning_placed_blocks.includes(block.typeId)) {
-    world.getAllPlayers().filter((player: Player)=> player.isOp()).forEach((player: Player) => {
+    world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
       player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が${block.typeId}を設置しました！(${block.x},${block.y},${block.z})`);
     });
   }
@@ -54,7 +54,7 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
   if (permission.isTrusted(player)) return;
 
   if (warning_broken_blocks.includes(block.typeId)) {
-    world.getAllPlayers().filter((player: Player)=> player.isOp()).forEach((player: Player) => {
+    world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
       player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が${block.typeId}を破壊しました！(${block.x},${block.y},${block.z})`);
     });
   }

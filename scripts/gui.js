@@ -2,10 +2,10 @@ import {InputPermissionCategory, Player, world} from "@minecraft/server";
 import {ActionFormData} from "@minecraft/server-ui";
 import * as permission from "./permission";
 
-export function showAdminMenu(admin: Player) {
+export function showAdminMenu(admin) {
   const form = new ActionFormData();
   form.title("プレイヤー管理");
-  const player_list: Player[] = [];
+  const player_list = [];
   world.getAllPlayers().filter((player) => !player.isOp()).forEach((player) => {
     form.button(player.name);
     player_list.push(player);
@@ -17,7 +17,7 @@ export function showAdminMenu(admin: Player) {
   });
 }
 
-function showPlayerMenu(player: Player, admin: Player) {
+function showPlayerMenu(player, admin) {
   const form = new ActionFormData();
   form.title(player.name);
   if (permission.isTrusted(player)) {
