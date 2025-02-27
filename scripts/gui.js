@@ -10,6 +10,9 @@ export function showAdminMenu(admin) {
     form.button(player.name);
     player_list.push(player);
   });
+  if (player_list.length === 0) {
+    form.body("プレイヤーがいません");
+  }
   // @ts-ignore
   form.show(admin).then((data) => {
     const player = player_list[data.selection];

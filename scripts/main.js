@@ -8,6 +8,7 @@ const chat_max_length = 30;
 const warning_items = [
   "minecraft:flint_and_steel",
   "minecraft:fire_charge",
+  "minecraft:lava_bucket",
 ]
 const warning_placed_blocks = [
   "minecraft:tnt",
@@ -23,39 +24,39 @@ const player_last_chat_time = {};
 // 火を付けられたのを検知
 world.afterEvents.itemUse.subscribe((event) => {
   const item = event.itemStack;
-  const player = event.source
+  const target = event.source
 
-  if (permission.isTrusted(player)) return;
+  if (permission.isTrusted(target)) return;
 
   if (warning_items.includes(item.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
-      player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が着火しました！(${player.location})`);
+      player.dimension.runCommand(`/title ${player.name} actionbar §c${target.name}を${item.typeId}使いました！(${target.location.x},${target.location.y},${target.location.z})`);
     });
   }
 });
 
 world.afterEvents.playerPlaceBlock.subscribe((event) => {
-  const player = event.player;
+  const target = event.player;
   const block = event.block;
 
   if (permission.isTrusted(player)) return;
 
   if (warning_placed_blocks.includes(block.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
-      player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が${block.typeId}を設置しました！(${block.x},${block.y},${block.z})`);
+      player.dimension.runCommand(`/title ${player.name} actionbar §c${target.name}が${block.typeId}を設置しました！(${block.x},${block.y},${block.z})`);
     });
   }
 });
 
 world.afterEvents.playerBreakBlock.subscribe((event) => {
-  const player = event.player;
+  const target = event.player;
   const block = event.block;
 
-  if (permission.isTrusted(player)) return;
+  if (permission.isTrusted(target)) return;
 
   if (warning_broken_blocks.includes(block.typeId)) {
     world.getAllPlayers().filter((player)=> player.isOp()).forEach((player) => {
-      player.dimension.runCommand(`/title ${player.name} actionbar §c${player.name}が${block.typeId}を破壊しました！(${block.x},${block.y},${block.z})`);
+      player.dimension.runCommand(`/title ${player.name} actionbar §c${target.name}が${block.typeId}を破壊しました！(${block.x},${block.y},${block.z})`);
     });
   }
 });
@@ -64,10 +65,9 @@ world.beforeEvents.chatSend.subscribe((event) => {
   const player = event.sender;
 
   if (command.isCommand(event.message)) {
+    event.cancel = true;
     const {command: cmd, args} = command.parse(event.message);
-    system.run(() => {
-      command.execute(player, cmd, args);
-    });
+    command.execute(player, cmd, args);
   } else {
     if (player.isOp()) return;
 
