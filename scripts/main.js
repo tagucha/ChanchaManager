@@ -79,8 +79,8 @@ world.beforeEvents.chatSend.subscribe((event) => {
       });
     }
 
-    if (player_last_chat_time[player.name]) {
-      const last = player_last_chat_time[player.name];
+    if (player_last_chat_time[player.id]) {
+      const last = player_last_chat_time[player.id];
       const now = system.currentTick;
       if (now - last < chat_cooldown * 20) {
         event.cancel = true;
@@ -90,6 +90,6 @@ world.beforeEvents.chatSend.subscribe((event) => {
       }
     }
 
-    player_last_chat_time[player.name] = system.currentTick;
+    player_last_chat_time[player.id] = system.currentTick;
   }
 })
