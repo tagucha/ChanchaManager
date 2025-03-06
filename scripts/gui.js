@@ -13,6 +13,7 @@ export function showAdminMenu(admin) {
   if (player_list.length === 0) {
     form.body("プレイヤーがいません");
   }
+  form.button("閉じる");
   form.show(admin).then((data) => {
     const player = player_list[data.selection];
     if (player) showPlayerMenu(player, admin);
