@@ -18,6 +18,31 @@ const warning_broken_blocks = [
   "minecraft:chest",
   "minecraft:trapped_chest",
 ]
+const inventory_blocks = [
+  "minecraft:chest",
+  "minecraft:trapped_chest",
+  "minecraft:barrel",
+  "minecraft:shulker_box",
+  "minecraft:white_shulker_box",
+  "minecraft:orange_shulker_box",
+  "minecraft:magenta_shulker_box",
+  "minecraft:light_blue_shulker_box",
+  "minecraft:yellow_shulker_box",
+  "minecraft:lime_shulker_box",
+  "minecraft:pink_shulker_box",
+  "minecraft:gray_shulker_box",
+  "minecraft:light_gray_shulker_box",
+  "minecraft:cyan_shulker_box",
+  "minecraft:purple_shulker_box",
+  "minecraft:blue_shulker_box",
+  "minecraft:brown_shulker_box",
+  "minecraft:green_shulker_box",
+  "minecraft:red_shulker_box",
+  "minecraft:black_shulker_box",
+  "minecraft:dispenser",
+  "minecraft:dropper",
+  "minecraft:hopper",
+]
 
 const translatable = {
   "minecraft:flint_and_steel": "火打石",
@@ -37,7 +62,7 @@ world.afterEvents.itemUse.subscribe((event) => {
   const target = event.source
 
   if (target.isOp()) {
-    if (item.typeId === "minecraft:stick") {
+    if (item.typeId === "minecraft:compass") {
       showAdminMenu(target);
     }
   }
@@ -49,8 +74,8 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   const item = event.itemStack;
 
   if (target.isOp()) {
-    if (item?.typeId === "minecraft:flint") {
-      if (block.typeId === "minecraft:chest") {
+    if (item?.typeId === "minecraft:clock") {
+      if (inventory_blocks.includes(block.typeId)) {
         system.run(() => {
           const chest = block.getComponent("inventory");
           const size = chest.container.size;
