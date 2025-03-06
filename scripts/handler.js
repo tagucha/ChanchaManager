@@ -43,36 +43,45 @@ world.afterEvents.itemUse.subscribe((event) => {
   }
 });
 
-world.afterEvents.playerInteractWithBlock.subscribe((event) => {
+world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   const target = event.player;
   const block = event.block;
   const item = event.itemStack;
 
   if (target.isOp()) {
-    if (item.typeId === "minecraft:flint") {
+    if (item?.typeId === "minecraft:flint") {
       if (block.typeId === "minecraft:chest") {
-        const chest = block.getComponent("inventory");
-        const size = chest.container.size;
-        const items = [];
-        for (let i = 0; i < size; i++) {
-          const slot = chest.container.getSlot(i);
-          if (slot.hasItem()) {
-            items.push(slot.getItem());
+        system.run(() => {
+          const chest = block.getComponent("inventory");
+          const size = chest.container.size;
+          const items = [];
+          for (let i = 0; i < size; i++) {
+            const slot = chest.container.getSlot(i);
+            if (slot.hasItem()) {
+              items.push(slot.getItem());
+            }
           }
-        }
-        chest.container.clearAll();
-        items.sort((a, b) => {
-          if (a.typeId < b.typeId) return -1;
-          if (a.typeId > b.typeId) return 1;
-          return 0;
+          chest.container.clearAll();
+          items.sort((a, b) => {
+            if (a.typeId < b.typeId) return -1;
+            if (a.typeId > b.typeId) return 1;
+            return 0;
+          });
+          items.forEach((item) => {
+            chest.container.addItem(item);
+          });
+          target.sendMessage(`§aチェストの中身を整理しました！`);
         });
-        items.forEach((item) => {
-          chest.container.addItem(item);
-        });
-        target.sendMessage(`§aチェストの中身を整理しました！`);
+        event.cancel = true;
       }
     }
   }
+})
+
+world.afterEvents.playerInteractWithBlock.subscribe((event) => {
+  const target = event.player;
+  const block = event.block;
+  const item = event.itemStack;
 
   if (permission.isTrusted(target)) return;
 
