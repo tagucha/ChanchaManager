@@ -85,7 +85,7 @@ world.afterEvents.itemUse.subscribe((event) => {
       target.sendMessage(`§aGameMode: ${target.getGameMode().valueOf()}`);
       target.sendMessage(`§aValid: ${target.isValid}`);
       target.sendMessage(`§aTrusted: ${permission.isTrusted(target)}`);
-      target.sendMessage(`$aLocation : (${target.getSpawnPoint().x}, ${target.getSpawnPoint().y}, ${target.getSpawnPoint().z})`);
+      target.sendMessage(`§aSpawnPoint : (${target.getSpawnPoint()?.x}, ${target.getSpawnPoint()?.y}, ${target.getSpawnPoint()?.z})`);
       target.sendMessage(`§aTags: ${target.getTags().join(", ")}`);
       const properties = target.getDynamicPropertyIds();
       target.sendMessage(`§aProperties: ${properties.length}`);
