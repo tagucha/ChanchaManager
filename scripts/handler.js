@@ -64,6 +64,37 @@ world.afterEvents.itemUse.subscribe((event) => {
   if (target.isOp()) {
     if (item.typeId === "minecraft:compass") {
       showAdminMenu(target);
+    } else if (item.typeId === "minecraft:clock") {
+      target.sendMessage("§a=== Server Status ===");
+      target.sendMessage(`§aCurrentTick: ${system.currentTick}`);
+      target.sendMessage(`§aWeather: ${world.getAbsoluteTime()}`);
+      target.sendMessage(`§aTimeOfDay: ${world.getTimeOfDay()}`);
+      target.sendMessage(`§aDay: ${world.getDay()}`);
+      target.sendMessage(`§aMoonPhase: ${world.getMoonPhase()}`);
+      target.sendMessage(`§aDifficulty: ${world.getDifficulty()}`);
+      const players = world.getAllPlayers();
+      target.sendMessage(`§aPlayers: ${players.length}`);
+      players.forEach((player) => {
+        target.sendMessage(`§a- ${player.name}`);
+      });
+
+      target.sendMessage("$a=== Player Status ===");
+      target.sendMessage(`§aPlayer: ${target.name}`);
+      target.sendMessage(`§aDimension: ${target.dimension.id}`);
+      target.sendMessage(`§aLocation: (${target.location.x}, ${target.location.y}, ${target.location.z})`);
+      target.sendMessage(`§aHP: ${target.getComponent("minecraft:health").currentValue}`);
+      target.sendMessage(`§aGameMode: ${target.getGameMode()}`);
+      target.sendMessage(`§aValid: ${target.isValid}`);
+      target.sendMessage(`§aTrusted: ${permission.isTrusted(target)}`);
+      target.sendMessage(`§aInputPermissions: ${target.inputPermissions}`);
+      target.sendMessage(`$aLocation : (${target.getSpawnPoint().x}, ${target.getSpawnPoint().y}, ${target.getSpawnPoint().z})`);
+      target.sendMessage(`§aTags: ${target.getTags().join(", ")}`);
+      const properties = target.getDynamicPropertyIds();
+      target.sendMessage(`§aProperties: ${properties.length}`);
+      properties.forEach((property) => {
+        target.sendMessage(`§a- ${property}: ${target.getDynamicProperty(property)}`);
+      });
+
     }
   }
 });
@@ -169,3 +200,4 @@ world.beforeEvents.chatSend.subscribe((event) => {
 
   player_last_chat_time[player.id] = system.currentTick;
 })
+

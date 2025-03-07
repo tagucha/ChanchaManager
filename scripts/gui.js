@@ -1,4 +1,4 @@
-import {EntityComponentTypes, InputPermissionCategory, world} from "@minecraft/server";
+import {EntityComponentTypes, InputPermissionCategory, Player, world} from "@minecraft/server";
 import {ActionFormData} from "@minecraft/server-ui";
 import * as permission from "./permission";
 
@@ -20,13 +20,15 @@ export function showAdminMenu(admin) {
   });
 }
 
-function showPlayerMenu(player, admin) {
+function showPlayerMenu(player: Player, admin) {
   const form = new ActionFormData();
   form.title(player.name);
   let bodyText = "";
   bodyText += "Dimension: " + player.dimension.id + "\n";
   bodyText += "Location: (" + Math.trunc(player.location.x) + ", " + Math.trunc(player.location.y) + ", " + Math.trunc(player.location.z) + ")\n";
   bodyText += "HP: " + player.getComponent(EntityComponentTypes.Health).currentValue + "\n";
+  bodyText += "GameMode: " + player.gameMode + "\n";
+  bodyText += player.isValid
   if (permission.isTrusted(player)) {
     bodyText += "信頼中\n";
   }
