@@ -71,7 +71,7 @@ world.afterEvents.itemUse.subscribe((event) => {
       target.sendMessage(`§aTimeOfDay: ${world.getTimeOfDay()}`);
       target.sendMessage(`§aDay: ${world.getDay()}`);
       target.sendMessage(`§aMoonPhase: ${world.getMoonPhase()}`);
-      target.sendMessage(`§aDifficulty: ${world.getDifficulty()}`);
+      target.sendMessage(`§aDifficulty: ${world.getDifficulty().valueOf()}`);
       const players = world.getAllPlayers();
       target.sendMessage(`§aPlayers: ${players.length}`);
       players.forEach((player) => {
@@ -83,16 +83,20 @@ world.afterEvents.itemUse.subscribe((event) => {
       target.sendMessage(`§aDimension: ${target.dimension.id}`);
       target.sendMessage(`§aLocation: (${target.location.x}, ${target.location.y}, ${target.location.z})`);
       target.sendMessage(`§aHP: ${target.getComponent("minecraft:health").currentValue}`);
-      target.sendMessage(`§aGameMode: ${target.getGameMode()}`);
+      target.sendMessage(`§aGameMode: ${target.getGameMode().valueOf()}`);
       target.sendMessage(`§aValid: ${target.isValid}`);
       target.sendMessage(`§aTrusted: ${permission.isTrusted(target)}`);
-      target.sendMessage(`§aInputPermissions: ${target.inputPermissions}`);
       target.sendMessage(`$aLocation : (${target.getSpawnPoint().x}, ${target.getSpawnPoint().y}, ${target.getSpawnPoint().z})`);
       target.sendMessage(`§aTags: ${target.getTags().join(", ")}`);
       const properties = target.getDynamicPropertyIds();
       target.sendMessage(`§aProperties: ${properties.length}`);
       properties.forEach((property) => {
         target.sendMessage(`§a- ${property}: ${target.getDynamicProperty(property)}`);
+      });
+      const components = target.getComponents();
+      target.sendMessage(`§aComponents: ${components.length}`);
+      components.forEach((component) => {
+        target.sendMessage(`§a- ${component.typeId}`);
       });
 
     }
