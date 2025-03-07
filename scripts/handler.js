@@ -71,7 +71,6 @@ world.afterEvents.itemUse.subscribe((event) => {
       target.sendMessage(`§aTimeOfDay: ${world.getTimeOfDay()}`);
       target.sendMessage(`§aDay: ${world.getDay()}`);
       target.sendMessage(`§aMoonPhase: ${world.getMoonPhase()}`);
-      target.sendMessage(`§aDifficulty: ${world.getDifficulty().valueOf()}`);
       const players = world.getAllPlayers();
       target.sendMessage(`§aPlayers: ${players.length}`);
       players.forEach((player) => {
